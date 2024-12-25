@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-  namespace: expense     #if we wont give namespace it ill goes to default
+  namespace: expense    ##if we wont give it will create in default
   labels:
     app: mysql
     tier: db
     project: expense
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: mysql
@@ -34,3 +34,19 @@ spec:
             port: 3306
           initialDelaySeconds: 15
           periodSeconds: 10
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+  namespace: expense
+spec:
+  selector:
+    app: mysql
+    tier: db
+    project: expense
+  ports:
+  - name: mysql-port
+    protocol: TCP
+    port: 3306 # service port
+    targetPort: 3306 # container port
