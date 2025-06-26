@@ -5,25 +5,25 @@ metadata:
   namespace: expense
   labels:
     app: frontend
-    tier: api
+    tier: web
     project: expense
 spec:
   replicas: 2
   selector:
     matchLabels:
     app: frontend
-    tier: api
+    tier: web
     project: expense
   template:
     metadata:
       labels:
         app: frontend
-        tier: api
+        tier: web
         project: expense
     spec:
       containers:
       - name: frontend
-        images: joimdevops/frontend:v1
+        images: joindevops/frontend:v1
 ---
 kind: Service
 apiVersion: v1
@@ -34,7 +34,7 @@ spec:
   type: LoadBalancer
   selector:
     app: frontend
-    tier: api
+    tier: web
     project: expense
   ports:
   - name: frontend-port
